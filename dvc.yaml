@@ -1,0 +1,22 @@
+stages:
+  data_ingestion:
+    cmd: python src/credit_card_fraud_detection/pipeline/stage_1_data_ingestion.py
+    deps:
+      - src/credit_card_fraud_detection/pipeline/stage_1_data_ingestion.py
+      - src/credit_card_fraud_detection/components/data_ingestion.py
+      - config/config.yaml
+    outs:
+      - artifacts/data_ingestion/data
+
+  preporcessing_training:
+    cmd: python src/credit_card_fraud_detection/pipeline/stage_2_data_preprocesser_trainer.py
+    deps:
+      - src/credit_card_fraud_detection/pipeline/stage_2_data_preprocesser_trainer.py
+      - src/credit_card_fraud_detection/components/pre_processer.py
+      - src/credit_card_fraud_detection/components/trainer.py
+      - config/config.yaml
+      - artifacts/data_ingestion/data
+    outs:
+      - artifacts/training/model.pkl
+      - scores.json
+
